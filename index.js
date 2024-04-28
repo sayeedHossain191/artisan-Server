@@ -34,6 +34,7 @@ async function run() {
         await client.connect();
 
         const artCollection = client.db('artDB').collection('artCraft')
+        const userCollection = client.db('artDB').collection('user')
 
         app.get('/artCraft', async (req, res) => {
             const cursor = artCollection.find();
@@ -85,6 +86,15 @@ async function run() {
             const result = await artCollection.deleteOne(query);
             res.send(result)
         })
+
+        //user related api
+        app.post('/user', async (req, res) => {
+            const user = req.body;
+            console.log(user)
+            const result = await userCollection.insertOne(user)
+            res.send(result)
+        })
+
 
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
