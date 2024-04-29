@@ -37,6 +37,15 @@ async function run() {
         const userCollection = client.db('artDB').collection('user')
         const categoryCollection = client.db('artDB').collection('ceramicsAndPottery')
 
+        //Sub-category
+        app.get('/ceramicsAndPottery', async (req, res) => {
+            const cursor = categoryCollection.find();
+            const categoryResult = await cursor.toArray()
+            res.send(categoryResult)
+        })
+
+
+        //user-card collection
         app.get('/artCraft', async (req, res) => {
             const cursor = artCollection.find();
             const result = await cursor.toArray();
