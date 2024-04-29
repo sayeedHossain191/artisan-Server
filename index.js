@@ -35,6 +35,7 @@ async function run() {
 
         const artCollection = client.db('artDB').collection('artCraft')
         const userCollection = client.db('artDB').collection('user')
+        const categoryCollection = client.db('artDB').collection('ceramicsAndPottery')
 
         app.get('/artCraft', async (req, res) => {
             const cursor = artCollection.find();
@@ -65,7 +66,6 @@ async function run() {
 
             const art = {
                 $set: {
-                    name: updatedArt.name,
                     image: updatedArt.image,
                     item: updatedArt.item,
                     category: updatedArt.category,
@@ -73,7 +73,8 @@ async function run() {
                     price: updatedArt.price,
                     customization: updatedArt.customization,
                     stock: updatedArt.stock,
-                    time: updatedArt.time
+                    time: updatedArt.time,
+                    rating: updatedArt.rating
                 }
             }
 
