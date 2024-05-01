@@ -1,12 +1,23 @@
-const express = require('express')
 const cors = require('cors')
+const express = require('express')
 const app = express()
 require('dotenv').config()
 const port = process.env.PORT || 5000;
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 //Middleware
-app.use(cors());
+//app.use(cors());
+// const corsOptions = {
+//     origin: 'http://localhost:5173',
+//     credentials: true,
+//     methods: ['GET', 'POST', 'PUT', 'DELETE']
+// };
+
+// app.use(cors(corsOptions));
+
+app.use(cors())
+// app.options("", cors(cors))
+
 app.use(express.json());
 
 
@@ -31,7 +42,7 @@ const client = new MongoClient(uri, {
 async function run() {
     try {
         // Connect the client to the server	(optional starting in v4.7)
-        await client.connect();
+
 
         const artCollection = client.db('artDB').collection('artCraft')
         const userCollection = client.db('artDB').collection('user')
@@ -95,7 +106,7 @@ async function run() {
             const id = req.params.id;
             const query = { _id: new ObjectId(id) }
             const result = await artCollection.deleteOne(query);
-            res.send(result)
+            res.send(result);
         })
 
 
@@ -111,17 +122,17 @@ async function run() {
         app.post('/user', async (req, res) => {
             const user = req.body;
             console.log(user)
-            const result = await userCollection.insertOne(user)
-            res.send(result)
+            const result = await userCollection.insertOne(user);
+            res.send(result);
         })
 
 
         // Send a ping to confirm a successful connection
-        await client.db("admin").command({ ping: 1 });
+
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
     } finally {
         // Ensures that the client will close when you finish/error
-        //await client.close();
+
     }
 }
 run().catch(console.dir);
